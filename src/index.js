@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
+//creating buttons (square) to pass to the Board
 class Square extends React.Component {
     render() {
         return (
@@ -15,6 +16,7 @@ class Square extends React.Component {
 
 class Board extends React.Component {
     renderSquare(i) {
+        // passing a prop called value to the Square
       return <Square value={i} />;
     }
     render(){
@@ -23,6 +25,7 @@ class Board extends React.Component {
             <div>
                 <div className="status">{status}</div>
                 <div className="board-row">
+                    {/* defining a number in each square in the rendered outpu */}
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
                     {this.renderSquare(2)}
