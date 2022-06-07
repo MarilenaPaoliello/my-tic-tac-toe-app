@@ -17,7 +17,7 @@ class Square extends React.Component {
         return (
             // passing a function as the onClick prop
             //displaing the current state’s value when clicked
-        <button className="square" onClick={()=>this.setS({value:"X"})}>
+        <button className="square" onClick={()=>this.setState({value:"X"})}>
             {this.state.value} 
         </button>
         );
@@ -25,9 +25,20 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+    //adding a constructor to set the state 
+    //to the board(parent)to pass to the children
+    constructor(props){
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null),
+        };
+
+    }
     renderSquare(i) {
-        // passing a prop called value to the Square
-      return <Square value={i} />;
+        //A) passing a prop called value to the Square
+      //A)return <Square value={i} />;
+      //modifying the method to read the state from the Board's constructor
+      return <Square value={this.state.squares[i]} />;
     }
     render(){
         const status = "Next player: "; 
