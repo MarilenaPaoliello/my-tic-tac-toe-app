@@ -5,10 +5,20 @@ import './index.css';
 
 //creating buttons (square) to pass to the Board
 class Square extends React.Component {
+    //setting this.state in the constructor to define the 
+    constructor(props){
+        //always call super when defining the constructor of a React.Component subclass
+        super(props);
+        this.state = {
+            value: null,
+        };
+    }
     render() {
         return (
-        <button className="square">
-            {this.props.value}
+            // passing a function as the onClick prop
+            //displaing the current state’s value when clicked
+        <button className="square" onClick={()=>this.setS({value:"X"})}>
+            {this.state.value} 
         </button>
         );
     }
@@ -25,7 +35,7 @@ class Board extends React.Component {
             <div>
                 <div className="status">{status}</div>
                 <div className="board-row">
-                    {/* defining a number in each square in the rendered outpu */}
+                    {/* defining a number in each square in the rendered output */}
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
                     {this.renderSquare(2)}
