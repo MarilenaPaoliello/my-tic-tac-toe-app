@@ -51,7 +51,14 @@ class Board extends React.Component {
     //adding a method to store into the Board the square status change
     manageClick(i){
         const squares = this.state.squares.slice();
-        //adding condition with xIsNext to flip from X to O
+        //B) modifing in order to ignore a click
+        // if someone has won the game or if the square is filled
+        if (calculateWinner(squares) || squares[i]) {
+            return;
+          }
+          //*
+        
+        //A)adding condition with xIsNext to flip from X to O
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         this.setState({
           squares: squares,
@@ -70,8 +77,17 @@ class Board extends React.Component {
       />;
     }
     render(){
-        //updating status to displays which player has the next turn
-        const status = "Next player is: " + (this.state.xIsNext ? 'X' : 'O'); 
+        //A)updating status to displays which player has the next turn
+        //const status = "Next player is: " + (this.state.xIsNext ? 'X' : 'O'); 
+
+        //B) calling calculateWinner(squares) to check if the winner has won
+        const winner = calculateWinner(this.state.squares);
+        let status;
+        if(winner){
+            status= "winner is: " + winner; 
+        }else{
+            status="Next player" + (this.state.xIsNext ? 'X' : 'O');
+        }
         return(
             <div>
                 <div className="status">{status}</div>
@@ -96,3 +112,23 @@ class Board extends React.Component {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<Board />);
+//adding helper function to check for a winner 
+function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
